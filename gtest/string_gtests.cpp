@@ -53,3 +53,30 @@ TEST(StringClass, Assignment) {
     EXPECT_EQ(s, String());
     EXPECT_EQ(s.size(), 0);
 }
+
+TEST(StringClass, Capacity) {
+    char big[MAXLEN + 10];
+    for (int i = 0; i < MAXLEN + 9; ++i)
+        big[i] = 'a';
+    big[MAXLEN + 9] = '\0';
+
+    String a(big);
+    EXPECT_EQ(a.size(), MAXLEN - 1);
+
+    char fit[MAXLEN];
+    for (int i = 0; i < MAXLEN - 2; ++i)
+        fit[i] = 'a';
+    fit[MAXLEN - 2] = '\0';
+
+    String x(fit);
+    String y("b");
+    String z = x + y;
+    EXPECT_EQ(z.size(), MAXLEN - 1);
+
+    z += y;
+    EXPECT_EQ(z.size(), MAXLEN - 1);
+
+    String s("ab");
+    s += s;
+    EXPECT_EQ(s.size(), 4);
+}
