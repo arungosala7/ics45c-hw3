@@ -48,31 +48,29 @@ TEST(StringFunction, strncpy) {
 }  
 
 TEST(StringFunction, strcat) {
-    char result[20];
+    char a[20] = "foo";
+    EXPECT_EQ(String::strcat(a, "bar"), a);
+    EXPECT_STREQ(a, "foobar");
 
-    String::strcpy(result, "foo");
-    EXPECT_EQ(String::strcat(result, "bar"), result);
-    EXPECT_STREQ(result, "foobar");
+    char b[20] = "";
+    String::strcat(b, "abc");
+    EXPECT_STREQ(b, "abc");
 
-    String::strcpy(result, "");
-    String::strcat(result, "abc");
-    EXPECT_STREQ(result, "abc");
+    char c[20] = "abc";
+    String::strcat(c, "");
+    EXPECT_STREQ(c, "abc");
 
-    String::strcpy(result, "abc");
-    String::strcat(result, "");
-    EXPECT_STREQ(result, "abc");
+    char d[20] = "";
+    String::strcat(d, "");
+    EXPECT_STREQ(d, "");
 
-    String::strcpy(result, "");
-    String::strcat(result, "");
-    EXPECT_STREQ(result, "");
+    char e[20] = "a";
+    String::strcat(e, "b");
+    EXPECT_STREQ(e, "ab");
 
-    String::strcpy(result, "a");
-    String::strcat(result, "b");
-    EXPECT_STREQ(result, "ab");
-
-    String::strcpy(result, "hi,");
-    String::strcat(result, " you!");
-    EXPECT_STREQ(result, "hi, you!");
+    char f[20] = "hi,";
+    String::strcat(f, " you!");
+    EXPECT_STREQ(f, "hi, you!");
 }
 
 TEST(StringFunction, strncat) {
