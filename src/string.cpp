@@ -1,7 +1,6 @@
 #include <iostream>
-
 #include "string.hpp"
-
+#include <iomanip>
 using namespace std;
 
 String::String(const char *s) {
@@ -177,4 +176,31 @@ bool String::operator<=(const String &s) const {
 
 bool String::operator>=(const String &s) const {
     return strcmp(buf, s.buf) >= 0;
+}
+
+String String::operator+(const String &s) const {
+    String result(*this);
+    result += s;
+    return result;
+}
+
+String &String::operator+=(const String &s) {
+    int len = strlen(buf);
+    int slen = strlen(s.buf);
+    int room = MAXLEN - 1 - len;
+    if (slen > room) {
+        cout << "ERROR: String Capacity Exceeded" << endl;
+        slen = room;
+    }
+    strncat(buf, s.buf, slen);
+    return *this;
+}
+
+void String::read(istream &in) {
+    in >> setw(MAXLEN) >> buf;
+}
+
+istream &operator>>(istream &in, String &s) {
+    s.read(in);
+    return in;
 }
